@@ -1,6 +1,14 @@
+import { useState } from "react";
+import MainMenu from "./components/MainMenu";
+import Auth from "./components/Auth/Auth";
+
 const App = () => {
-  console.log("App is shown!");
-  return <div>App</div>;
+  const [jwt, setJwt] = useState("");
+  return (
+    <>
+      {jwt ? <MainMenu jwt={jwt} setJwt={setJwt} /> : <Auth setJwt={setJwt} />}
+    </>
+  );
 };
 
 export default App;
