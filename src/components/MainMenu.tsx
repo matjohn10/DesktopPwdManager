@@ -39,11 +39,10 @@ const MainMenu = ({ jwt, setJwt }: props) => {
 
   const fetchUserData = async (user: string) => {
     const res = await (window as any).server.getUserData(user, jwt);
-    console.log(res);
     if (res.status === 401) {
       // The refresh token is expired or refresh token of another user
       // clear user data and jwt, user automatically logged out
-
+      window.localStorage.removeItem("jwt");
       setData([]);
       setUserId("");
       setJwt("");

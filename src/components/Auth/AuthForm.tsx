@@ -27,23 +27,25 @@ const AuthForm = ({ type, setJwt }: props) => {
     setPassword(e.currentTarget.value);
   };
 
-  const keys = (window as any).keys as KEYS;
   const handleSubmit = async () => {
     if (type === "login") {
       const res = await (window as any).server.login({ username, password });
+      if (res.status === 401) {
+        setMessage({ text: "Wrong username or password.", error: true });
+        setIsMessage(true);
+        setPassword("");
+        return;
+      }
+      if (res.status === 500) {
+        setMessage({ text: "Server Error!", error: true });
+        setIsMessage(true);
+        setPassword("");
+        return;
+      }
       window.localStorage.setItem("jwt", res.data.token);
       setJwt(res.data.token);
     } else if (type === "register") {
-      const res = await fetch(keys.server() + "/auth/register", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          username,
-          password,
-        }),
-      });
+      const res = await (window as any).server.register({ username, password });
       if (res.status === 401 || res.status === 500) {
         setMessage({ text: "Error. Try again!", error: true });
         setIsMessage(true);
@@ -59,6 +61,7 @@ const AuthForm = ({ type, setJwt }: props) => {
       if (res.status === 201) {
         // succesfull registration, so login
         setMessage({ text: "Successful! Time to login.", error: false });
+        // maybe implement a cool animation on registration that leads to login??
         return;
       }
     }

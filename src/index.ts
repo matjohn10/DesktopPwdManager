@@ -74,6 +74,26 @@ ipcMain.handle("login", async (event, user: UserForm) => {
   }
 });
 
+ipcMain.handle("register", async (event, user: UserForm) => {
+  const res = await fetch(process.env.REACT_APP_SERVER_URL + "/auth/register", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      username: user.username,
+      password: user.password,
+    }),
+  });
+  if (res.status !== 201) {
+    console.log(res.status, res.statusText);
+    return { status: res.status, error: res.statusText };
+  } else {
+    const data = await res.json();
+    return { status: res.status, data };
+  }
+});
+
 ipcMain.handle("refresh", async (event, userId: string) => {
   const res = await fetch(process.env.REACT_APP_SERVER_URL + "/refresh", {
     method: "POST",

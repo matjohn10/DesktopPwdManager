@@ -14,6 +14,10 @@ contextBridge.exposeInMainWorld("server", {
     const res = await ipcRenderer.invoke("login", user);
     return res;
   },
+  register: async (user: UserForm) => {
+    const res = await ipcRenderer.invoke("login", user);
+    return res;
+  },
   refresh: async (userId: string) => {
     const res = await ipcRenderer.invoke("refresh", userId);
     return res;
