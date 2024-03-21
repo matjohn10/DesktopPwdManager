@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { jwtDecode, JwtPayload } from "jwt-decode";
+import { KEYS } from "../types/keys";
 
 interface props {
   jwt: string;
@@ -26,7 +27,7 @@ const MainMenu = ({ jwt, setJwt }: props) => {
   const [data, setData] = useState<UserData[]>([]);
 
   const fetchRefresh = async () => {
-    const res = await fetch("http://localhost:3030/refresh", {
+    const res = await fetch(keys.server() + "/refresh", {
       method: "GET",
     });
     // check status
@@ -36,9 +37,9 @@ const MainMenu = ({ jwt, setJwt }: props) => {
     const data = await res.json();
     setJwt(data.token);
   };
-
+  const keys = (window as any).keys as KEYS;
   const fetchUserData = async (user: string) => {
-    const res = await fetch("http://localhost:3030/api/" + user, {
+    const res = await fetch(keys.server() + "/api/" + user, {
       method: "GET",
       headers: { Authorization: `Bearer ${jwt}` },
     });

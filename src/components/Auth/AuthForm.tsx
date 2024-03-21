@@ -1,5 +1,6 @@
 import { useState } from "react";
 import MessageSpan from "../MessageSpan";
+import { KEYS } from "../../types/keys";
 
 interface props {
   type: "login" | "register";
@@ -25,9 +26,11 @@ const AuthForm = ({ type, setJwt }: props) => {
   const onChangePassword = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(e.currentTarget.value);
   };
+
+  const keys = (window as any).keys as KEYS;
   const handleSubmit = async () => {
     if (type === "login") {
-      const res = await fetch("http://localhost:3030/auth/login", {
+      const res = await fetch(keys.server() + "/auth/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -46,7 +49,7 @@ const AuthForm = ({ type, setJwt }: props) => {
       const data = await res.json();
       setJwt(data.token);
     } else if (type === "register") {
-      const res = await fetch("http://localhost:3030/auth/register", {
+      const res = await fetch(keys.server() + "/auth/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
