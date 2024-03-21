@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { jwtDecode, JwtPayload } from "jwt-decode";
-import { KEYS } from "../types/keys";
 
 interface props {
   jwt: string;
@@ -27,27 +26,24 @@ const MainMenu = ({ jwt, setJwt }: props) => {
   const [data, setData] = useState<UserData[]>([]);
 
   const fetchRefresh = async () => {
-    const res = await fetch(keys.server() + "/refresh", {
-      method: "GET",
-    });
+    const res = await (window as any).server.refresh(userId);
     // check status
-    if (res.status === 401) {
+    if (res.status !== 200) {
+      window.localStorage.removeItem("jwt");
       setJwt("");
+      return;
     }
-    const data = await res.json();
-    setJwt(data.token);
+    window.localStorage.setItem("jwt", res.data.token);
+    setJwt(res.data.token);
   };
-  const keys = (window as any).keys as KEYS;
+
   const fetchUserData = async (user: string) => {
-    const res = await fetch(keys.server() + "/api/" + user, {
-      method: "GET",
-      headers: { Authorization: `Bearer ${jwt}` },
-    });
+    const res = await (window as any).server.getUserData(user, jwt);
+    console.log(res);
     if (res.status === 401) {
       // The refresh token is expired or refresh token of another user
       // clear user data and jwt, user automatically logged out
 
-      //localStorage.removeItem("jwt");
       setData([]);
       setUserId("");
       setJwt("");
@@ -57,13 +53,12 @@ const MainMenu = ({ jwt, setJwt }: props) => {
       console.log("Error with the querying the DB.");
       return;
     }
-    const data = (await res.json()) as UserData[];
-    setData(data);
+    setData(res.data);
   };
 
   useEffect(() => {
     const decodedJwt = jwtDecode(jwt) as JWT;
-    console.log(jwt);
+    //console.log(jwt);
     if (Date.now() > (decodedJwt.exp || 1) * 1000) {
       console.log("Send server request for refresh token");
       fetchRefresh();
@@ -72,7 +67,16 @@ const MainMenu = ({ jwt, setJwt }: props) => {
       fetchUserData(decodedJwt.userId);
     }
   }, []);
-  return <div>MainMenu</div>;
+  return (
+    <div>
+      <h3>User Info:</h3>
+      <ul>
+        {data.map((web) => (
+          <li>{web.name}</li>
+        ))}
+      </ul>
+    </div>
+  );
 };
 
 export default MainMenu;

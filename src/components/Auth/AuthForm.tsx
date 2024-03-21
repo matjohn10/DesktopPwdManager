@@ -30,24 +30,9 @@ const AuthForm = ({ type, setJwt }: props) => {
   const keys = (window as any).keys as KEYS;
   const handleSubmit = async () => {
     if (type === "login") {
-      const res = await fetch(keys.server() + "/auth/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          username,
-          password,
-        }),
-      });
-      if (res.status === 401 || res.status === 500) {
-        setMessage({ text: "Error. Try again!", error: true });
-        setIsMessage(true);
-        setPassword("");
-        return;
-      }
-      const data = await res.json();
-      setJwt(data.token);
+      const res = await (window as any).server.login({ username, password });
+      window.localStorage.setItem("jwt", res.data.token);
+      setJwt(res.data.token);
     } else if (type === "register") {
       const res = await fetch(keys.server() + "/auth/register", {
         method: "POST",
