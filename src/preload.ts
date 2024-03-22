@@ -1,12 +1,17 @@
 // See the Electron documentation for details on how to use preload scripts:
-
-import { UserForm } from "./types/user";
-
 // https://www.electronjs.org/docs/latest/tutorial/process-model#preload-scripts
+import { UserForm } from "./types/user";
 const { contextBridge, ipcRenderer } = require("electron");
 
 contextBridge.exposeInMainWorld("keys", {
   server: () => process.env.REACT_APP_SERVER_URL,
+  saveJwt: async (token: string) => {
+    await ipcRenderer.invoke("save-jwt", token);
+  },
+  getJwt: async () => {
+    const token = await ipcRenderer.invoke("get-jwt");
+    return token;
+  },
 });
 
 contextBridge.exposeInMainWorld("server", {

@@ -25,8 +25,8 @@ const MainMenu = ({ jwt, setJwt }: props) => {
   const [userId, setUserId] = useState("");
   const [data, setData] = useState<UserData[]>([]);
 
-  const fetchRefresh = async () => {
-    const res = await (window as any).server.refresh(userId);
+  const fetchRefresh = async (user_id: string) => {
+    const res = await (window as any).server.refresh(user_id);
     // check status
     if (res.status !== 200) {
       window.localStorage.removeItem("jwt");
@@ -35,6 +35,7 @@ const MainMenu = ({ jwt, setJwt }: props) => {
     }
     window.localStorage.setItem("jwt", res.data.token);
     setJwt(res.data.token);
+    fetchUserData(user_id);
   };
 
   const fetchUserData = async (user: string) => {
@@ -60,15 +61,24 @@ const MainMenu = ({ jwt, setJwt }: props) => {
     //console.log(jwt);
     if (Date.now() > (decodedJwt.exp || 1) * 1000) {
       console.log("Send server request for refresh token");
-      fetchRefresh();
+      fetchRefresh(decodedJwt.userId);
     } else {
       setUserId(decodedJwt.userId);
       fetchUserData(decodedJwt.userId);
     }
   }, []);
+  const test = () => {
+    (window as any).keys.saveJwt("token");
+  };
+  const test2 = async () => {
+    const token = await (window as any).keys.getJwt();
+    console.log(token);
+  };
   return (
     <div>
       <h3>User Info:</h3>
+      <button onClick={test}>Test</button>
+      <button onClick={test2}>Test2</button>
       <ul>
         {data.map((web) => (
           <li>{web.name}</li>
