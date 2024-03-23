@@ -17,7 +17,8 @@ const AuthForm = ({ type, setJwt }: props) => {
   const [password, setPassword] = useState("");
 
   useEffect(() => {
-    (window as any).keys.getJwt().then((token: string) => setJwt(token));
+    if (setJwt)
+      (window as any).keys.getJwt().then((token: string) => setJwt(token));
   }, []);
 
   //Info message

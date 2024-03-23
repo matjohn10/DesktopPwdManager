@@ -1,5 +1,8 @@
 import { useEffect, useState } from "react";
 import { jwtDecode, JwtPayload } from "jwt-decode";
+import NavBar from "./NavBar";
+import ListPassword from "./ListPassword";
+import ViewComponent from "./ViewComponent";
 
 interface props {
   jwt: string;
@@ -29,21 +32,23 @@ const MainMenu = ({ jwt, setJwt }: props) => {
     const res = await (window as any).server.refresh(user_id);
     // check status
     if (res.status !== 200) {
-      window.localStorage.removeItem("jwt");
+      //window.localStorage.removeItem("jwt");
+      await (window as any).keys.delJwt();
       setJwt("");
       return;
     }
-    window.localStorage.setItem("jwt", res.data.token);
+    (window as any).keys.getJwt().then((token: string) => setJwt(token));
+    console.log("Refresh token succeed: ", res.data.token);
     setJwt(res.data.token);
-    fetchUserData(user_id);
+    fetchUserData(user_id, res.data.token);
   };
 
-  const fetchUserData = async (user: string) => {
-    const res = await (window as any).server.getUserData(user, jwt);
+  const fetchUserData = async (user: string, newJwt: string) => {
+    const res = await (window as any).server.getUserData(user, newJwt);
     if (res.status === 401) {
       // The refresh token is expired or refresh token of another user
       // clear user data and jwt, user automatically logged out
-      window.localStorage.removeItem("jwt");
+      await (window as any).keys.delJwt();
       setData([]);
       setUserId("");
       setJwt("");
@@ -64,27 +69,20 @@ const MainMenu = ({ jwt, setJwt }: props) => {
       fetchRefresh(decodedJwt.userId);
     } else {
       setUserId(decodedJwt.userId);
-      fetchUserData(decodedJwt.userId);
+      fetchUserData(decodedJwt.userId, jwt);
     }
   }, []);
-  const test = () => {
-    (window as any).keys.saveJwt("Some random shit!!");
-  };
-  const test2 = async () => {
-    const token = await (window as any).keys.getJwt();
-    console.log(token);
-  };
+
+  const test = () => {};
+
   return (
-    <div>
-      <h3>User Info:</h3>
-      <button onClick={test}>Test</button>
-      <button onClick={test2}>Test2</button>
-      <ul>
-        {data.map((web) => (
-          <li>{web.name}</li>
-        ))}
-      </ul>
-    </div>
+    <>
+      <NavBar setJwt={setJwt} setData={setData} setUserId={setUserId} />
+      <div className="main-container">
+        <ListPassword />
+        <ViewComponent />
+      </div>
+    </>
   );
 };
 

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import MainMenu from "./components/MainMenu";
+import MainMenu from "./components/User/MainMenu";
 import Auth from "./components/Auth/Auth";
 
 const App = () => {

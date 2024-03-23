@@ -58,3 +58,12 @@ export const getJwt = () => {
     return token;
   }
 };
+
+export const delJwt = () => {
+  if (
+    fs.existsSync(os.homedir() + "/" + process.env.REACT_APP_PATH + "/test.enc")
+  )
+    fs.unlinkSync(
+      os.homedir() + "/" + process.env.REACT_APP_PATH + "/test.enc"
+    );
+};

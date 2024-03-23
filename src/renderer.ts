@@ -27,4 +27,5 @@
  */
 
 import "./index.css";
+import "./components/User/user.css";
 import "./main";

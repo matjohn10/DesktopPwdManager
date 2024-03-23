@@ -1,10 +1,11 @@
 :root {
-  --main-bg: #f4fdd9;
-  --primary-btn: #575d90;
-  --primary-light-btn: #575d90aa;
-  --dark-fg: #4d5061;
-  --light-fg: #f4fdd9;
-  --accent: #575d90;
+  --main-bg: #f7f9f9;
+  --primary-btn: #ca7276;
+  --primary-light-btn: #b46570a6;
+  --grey-bg: #eae0e0;
+  --dark-fg: #000000;
+  --light-fg: #f7f9f9;
+  --accent: #e1a4a7;
 }
 
 @keyframes rotation {
@@ -29,13 +30,13 @@ html {
     sans-serif;
   color: var(--dark-fg);
   background-color: var(--main-bg);
-  padding: 1rem;
   width: 100%;
   height: 100%;
 }
 body {
   width: 100%;
   height: 100%;
+  /* background-color: #eef3f5; */
 }
 
 #root {
@@ -44,6 +45,10 @@ body {
   align-items: center;
   width: 100%;
   height: 100%;
+}
+
+.title-span-color {
+  color: var(--primary-btn);
 }
 
 .auth-container {
@@ -81,10 +86,9 @@ body {
   top: 0;
   bottom: 0;
   height: 80%;
-  background-color: #bcc0e758;
+  background-color: var(--primary-light-btn);
   border: none;
   border-radius: 0.5rem;
-  color: var(--light-fg);
   padding: 0.125rem 0.125rem;
 }
 .auth-header > button:hover {
@@ -106,6 +110,7 @@ body {
   padding: 2rem;
   /* border: 2px solid var(--accent); */
   border-radius: 1rem;
+  background-color: var(--primary-btn);
   box-shadow: var(--accent) 0px 1px 4px;
 }
 
@@ -124,18 +129,27 @@ body {
 }
 .auth-form > div > input {
   padding: 0.125rem;
-  border: none;
+  border: 2px solid var(--primary-btn);
   border-radius: 0.25rem;
   width: 90%;
   font-size: medium;
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
+  outline: none;
   box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
     rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
 }
+.auth-form > div > input:focus {
+  border: 2px solid var(--accent);
+}
+
 .auth-form > button {
   background-color: var(--primary-btn);
-  color: var(--light-fg);
+  box-shadow: var(--accent) 0px 1px 4px;
+  border: none;
+  color: var(--dark-fg);
   width: fit-content;
-  padding: 0.25rem;
+  padding: 0.5rem;
   font-size: medium;
   border-radius: 0.5rem;
   position: absolute;
@@ -150,6 +164,21 @@ body {
 }
 .auth-form > button:active {
   background-color: var(--light-fg);
-  color: var(--dark-fg);
   border: none;
+}
+
+.decorative {
+  width: 100%;
+  height: 97%;
+  position: absolute;
+  z-index: -10;
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.decorative > img {
+  object-fit: fill;
+  opacity: 0.15;
+  width: 100%;
+  height: 100%;
 }
