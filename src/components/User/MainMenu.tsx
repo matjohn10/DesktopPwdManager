@@ -73,14 +73,15 @@ const MainMenu = ({ jwt, setJwt }: props) => {
     }
   }, []);
 
-  const test = () => {};
-
   return (
     <>
       <NavBar setJwt={setJwt} setData={setData} setUserId={setUserId} />
       <div className="main-container">
-        <ListPassword />
+        <ListPassword data={data} />
         <ViewComponent />
+      </div>
+      <div className="Clearbit">
+        <a href="https://clearbit.com">Logos provided by Clearbit</a>
       </div>
     </>
   );
