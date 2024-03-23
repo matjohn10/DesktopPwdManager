@@ -12,8 +12,8 @@ contextBridge.exposeInMainWorld("keys", {
     const token = await ipcRenderer.invoke("get-jwt");
     return token;
   },
-  delJwt: async () => {
-    await ipcRenderer.invoke("del-jwt");
+  delJwt: async (id: string) => {
+    await ipcRenderer.invoke("del-jwt", id);
   },
 });
 

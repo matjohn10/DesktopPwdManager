@@ -144,4 +144,4 @@ ipcMain.handle("getUserData", async (event, userId: string, token: string) => {
 
 ipcMain.handle("save-jwt", (event, token: string) => saveJwt(token));
 ipcMain.handle("get-jwt", (event) => getJwt());
-ipcMain.handle("del-jwt", (event) => delJwt());
+ipcMain.handle("del-jwt", (event, id) => delJwt(id));

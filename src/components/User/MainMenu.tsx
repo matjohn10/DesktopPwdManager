@@ -40,6 +40,7 @@ const MainMenu = ({ jwt, setJwt }: props) => {
     (window as any).keys.getJwt().then((token: string) => setJwt(token));
     console.log("Refresh token succeed: ", res.data.token);
     setJwt(res.data.token);
+    setUserId(user_id);
     fetchUserData(user_id, res.data.token);
   };
 
@@ -75,7 +76,12 @@ const MainMenu = ({ jwt, setJwt }: props) => {
 
   return (
     <>
-      <NavBar setJwt={setJwt} setData={setData} setUserId={setUserId} />
+      <NavBar
+        setJwt={setJwt}
+        setData={setData}
+        userId={userId}
+        setUserId={setUserId}
+      />
       <div className="main-container">
         <ListPassword data={data} />
         <ViewComponent />

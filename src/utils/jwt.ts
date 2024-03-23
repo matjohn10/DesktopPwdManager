@@ -59,11 +59,20 @@ export const getJwt = () => {
   }
 };
 
-export const delJwt = () => {
+export const delJwt = async (id: string) => {
   if (
     fs.existsSync(os.homedir() + "/" + process.env.REACT_APP_PATH + "/test.enc")
   )
     fs.unlinkSync(
       os.homedir() + "/" + process.env.REACT_APP_PATH + "/test.enc"
     );
+  const res = await fetch(process.env.REACT_APP_SERVER_URL + "/auth/logout", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      userId: id,
+    }),
+  });
 };

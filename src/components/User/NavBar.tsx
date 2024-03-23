@@ -1,14 +1,15 @@
 import { UserData } from "./MainMenu";
 
 interface props {
+  userId: string;
   setJwt: React.Dispatch<React.SetStateAction<string>>;
   setData: (value: React.SetStateAction<UserData[]>) => void;
   setUserId: (value: React.SetStateAction<string>) => void;
 }
 
-const NavBar = ({ setJwt, setData, setUserId }: props) => {
+const NavBar = ({ userId, setJwt, setData, setUserId }: props) => {
   const logout = async () => {
-    await (window as any).keys.delJwt();
+    await (window as any).keys.delJwt(userId);
     setData([]);
     setUserId("");
     setJwt("");
