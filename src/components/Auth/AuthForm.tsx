@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import MessageSpan from "../MessageSpan";
 import { KEYS } from "../../types/keys";
 
@@ -15,6 +15,10 @@ interface Message {
 const AuthForm = ({ type, setJwt }: props) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+
+  useEffect(() => {
+    (window as any).keys.getJwt().then((token: string) => setJwt(token));
+  }, []);
 
   //Info message
   const [message, setMessage] = useState<Message>();
@@ -42,7 +46,8 @@ const AuthForm = ({ type, setJwt }: props) => {
         setPassword("");
         return;
       }
-      window.localStorage.setItem("jwt", res.data.token);
+      //window.localStorage.setItem("jwt", res.data.token);
+      (window as any).keys.saveJwt(res.data.token);
       setJwt(res.data.token);
     } else if (type === "register") {
       const res = await (window as any).server.register({ username, password });

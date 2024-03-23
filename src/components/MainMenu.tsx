@@ -68,7 +68,7 @@ const MainMenu = ({ jwt, setJwt }: props) => {
     }
   }, []);
   const test = () => {
-    (window as any).keys.saveJwt("token");
+    (window as any).keys.saveJwt("Some random shit!!");
   };
   const test2 = async () => {
     const token = await (window as any).keys.getJwt();
