@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import MainMenu from "./components/User/MainMenu";
 import Auth from "./components/Auth/Auth";
+import Test from "./components/Test";
 
 const App = () => {
   const [jwt, setJwt] = useState<string>("");
@@ -10,6 +11,7 @@ const App = () => {
   return (
     <>
       {jwt ? <MainMenu jwt={jwt} setJwt={setJwt} /> : <Auth setJwt={setJwt} />}
+      {/* <Test /> */}
     </>
   );
 };

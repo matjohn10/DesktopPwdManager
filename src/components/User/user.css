@@ -157,3 +157,136 @@
   max-width: 100%;
   max-height: 100%;
 }
+
+/* TESTING */
+.test-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  justify-content: center;
+  align-items: center;
+  width: 400px;
+  height: 100%;
+}
+.login-content {
+  position: relative;
+  border-radius: 1rem;
+  background-color: var(--primary-btn);
+  width: 100%;
+  height: 300px;
+}
+
+.left-door,
+.right-door {
+  visibility: hidden;
+  opacity: 0;
+  background-color: var(--grey-bg);
+  position: absolute;
+  top: 0;
+  height: 100%;
+  width: 50%;
+  transition: opacity 1s linear;
+}
+.left-door {
+  border-top-left-radius: 1rem;
+  border-bottom-left-radius: 1rem;
+  border: 4px solid rgb(182, 173, 173);
+  left: -50%;
+}
+.right-door {
+  border-top-right-radius: 1rem;
+  border-bottom-right-radius: 1rem;
+  border: 4px solid rgb(182, 173, 173);
+  right: -50%;
+}
+.left-door > img,
+.right-door > img {
+  opacity: 0.3;
+  object-fit: fill;
+  height: 100%;
+  width: 100%;
+  max-width: 100%;
+  max-height: 100%;
+}
+.left-door > img {
+  border-top-left-radius: 0.8rem;
+  border-bottom-left-radius: 0.8rem;
+}
+.right-door > img {
+  border-top-right-radius: 0.8rem;
+  border-bottom-right-radius: 0.8rem;
+}
+.animate-left {
+  animation: left 1000ms forwards, bleft 1000ms 4300ms forwards;
+}
+.animate-right {
+  animation: right 1000ms forwards, bright 1000ms 4300ms forwards;
+}
+/* .animate-back-left {
+  animation: back-left 1000ms forwards;
+}
+.animate-back-right {
+  animation: back-right 1000ms forwards;
+} */
+.lock {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  width: 64px;
+  height: 64px;
+  z-index: 12;
+  border-radius: 50%;
+  /* background-color: darkmagenta;
+  border: 2px solid black; */
+  top: 0;
+  bottom: 0;
+  margin-top: auto;
+  margin-bottom: auto;
+  left: -19.5%;
+}
+.lock > img {
+  max-width: 100%;
+  max-height: 100%;
+}
+.rotate-lock {
+  animation: rlock 1000ms 1100ms forwards, llock 1000ms 3000ms forwards;
+}
+@keyframes left {
+  100% {
+    visibility: visible;
+    opacity: 1;
+    left: 0;
+  }
+}
+@keyframes right {
+  100% {
+    visibility: visible;
+    opacity: 1;
+    right: 0;
+  }
+}
+
+@keyframes bleft {
+  100% {
+    opacity: 0;
+    left: -50%;
+  }
+}
+@keyframes bright {
+  100% {
+    opacity: 0;
+    right: -50%;
+  }
+}
+
+@keyframes rlock {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes llock {
+  to {
+    transform: rotate(-360deg);
+  }
+}

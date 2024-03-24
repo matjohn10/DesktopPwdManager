@@ -7,10 +7,16 @@ interface props {
 
 const Register = ({ setLogin }: props) => {
   const [img, setImg] = useState("btn-switch");
+
+  // Decorative states
+  const [leftcn, setLeftcn] = useState("left-door");
+  const [rightcn, setRightcn] = useState("right-door");
+  const [lockcn, setLockcn] = useState("lock");
+  const [title, setTitle] = useState("Register");
   return (
     <div className="login-reg-container">
       <div className="auth-header">
-        <h1>Register</h1>
+        <h1>{title}</h1>
         <button
           onClick={() => {
             setImg("btn-switch rotate");
@@ -26,7 +32,30 @@ const Register = ({ setLogin }: props) => {
           />
         </button>
       </div>
-      <AuthForm type="register" />
+      <AuthForm
+        type="register"
+        setLogin={setLogin}
+        setLeftcn={setLeftcn}
+        setLockcn={setLockcn}
+        setRightcn={setRightcn}
+        setTitle={setTitle}
+      />
+
+      {/* DECORATIVE CONTENT */}
+      <div className={leftcn}>
+        <img src="static://images/texture.jpeg" alt="texture" />
+      </div>
+      <div className={rightcn}>
+        <img src="static://images/texture.jpeg" alt="texture" />
+        <div className={lockcn}>
+          <img
+            src="static://images/vault64.png"
+            alt="vault-handle"
+            height={64}
+            width={64}
+          />
+        </div>
+      </div>
     </div>
   );
 };
