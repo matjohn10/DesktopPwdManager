@@ -74,7 +74,7 @@
   outline: none;
 }
 .search-bar-container > input:focus {
-  border: 1px solid black;
+  border: 2px solid var(--primary-btn);
 }
 
 .nav-settings {
@@ -128,37 +128,130 @@
   overflow: scroll;
 }
 
-.view-container {
-  display: flex;
-  width: 65%;
-  padding: 0.5rem;
-  background-color: var(--grey-bg);
-  border-radius: 0.75rem;
-}
-
 .password-container {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0.5rem;
+  padding: 0.5rem 1.25rem;
   height: 7rem;
   min-height: 6rem;
   width: 100%;
   border-radius: 0.75rem;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px,
+    rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
+}
+
+.password-all-info {
+  display: flex;
+  height: 100%;
+}
+
+.compagny-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.pastille-info-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  gap: 0.25rem;
+  padding: 0.5rem;
+  justify-content: baseline;
+  align-items: baseline;
+  margin-top: 1rem;
+}
+
+.pastille-info-container > h3 {
+  font-weight: bold;
+  font-size: medium;
+}
+.pastille-info-container > p {
+  font-weight: 300;
+  font-size: small;
 }
 .compagny-logo {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 4rem;
-  height: 4rem;
+  width: 3.5rem;
+  height: 3.5rem;
+  padding: 0.125rem;
+  border-radius: 0.5rem;
+  background-color: var(--light-fg);
+  overflow: hidden;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
 }
 .compagny-logo > img {
+  border-radius: 0.5rem;
+  height: 100%;
+  width: 100%;
   max-width: 100%;
   max-height: 100%;
 }
 
-/* TESTING */
+.password-btns-container {
+  display: flex;
+  width: 40%;
+  height: 100%;
+  padding: 0.5rem;
+  justify-content: space-between;
+  align-items: end;
+}
+.password-btns-container > button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.5rem;
+  font-size: medium;
+  border: none;
+  background-color: var(--primary-btn);
+  border-radius: 0.25rem;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px,
+    rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
+  transition: transform 500ms;
+}
+.password-btns-container > button:hover,
+.password-btns-container > button:focus-visible {
+  transform: translateY(-0.1rem);
+  cursor: pointer;
+}
+.password-btns-container > button:active {
+  background-color: var(--light-fg);
+}
+
+/* VIEW CONTAINER */
+.view-container {
+  display: flex;
+  flex-direction: column;
+  width: 65%;
+  padding: 0.5rem;
+  background-color: var(--grey-bg);
+  border-radius: 0.75rem;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px,
+    rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
+}
+.view-menu {
+  display: flex;
+  justify-content: right;
+  gap: 0.75rem;
+}
+
+.setting-btn,
+.add-btn,
+.generate-btn {
+  background: none;
+  border: none;
+  transition: transform 500ms;
+}
+.view-menu > button:hover,
+.view-menu > button:focus-visible {
+  transform: translateY(-0.085rem);
+  cursor: pointer;
+}
+
+/* ANIMATIONS */
 .test-container {
   display: flex;
   flex-direction: column;
